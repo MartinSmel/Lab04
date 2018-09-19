@@ -74,24 +74,34 @@ linreg <- setRefClass ( "linreg",
                                cat("\n")
                              }
                              invisible(lapply(i<-1:length(x), print_element))
+                           }, 
+                           plot <- function (object) {
+                             #Still wrong!
+                             library(ggplot2)
+                             p<-ggplot()+
+                               layer(
+                                 mapping=aes(x=object$The_fitted_value, y=object$The_residuals),
+                                 geom="point", stat="identity", position="identity")
+                                 p
+                               
+                           }, 
+                           resid <- function (object) {
+                             #######
+                             object$The_residuals
+                           }, 
+                           pred <- function (object) {
+                             #######
+                             object$The_fitted_value
+                           } ,
+                           coef <- function (object) {
+                             #######
+                             coef <- as.vector(object$Regressions_coefficients)
+                            for(i in 1: length(coef))  
+                             names(coef)[[i]] <- paste("coefficient", as.character(i))
+                            coef
                            } 
-                      #     plot = function () {
-                      #       #######
-                      #       1
-                      #     } ,
-                      #     resid = function () {
-                      #       #######
-                      #       1
-                      #     } ,
-                      #     pred = function () {
-                      #       #######
-                      #       1
-                      #     } ,
-                      #     coef = function () {
-                      #       #######
-                      #       1
-                      #     } ,
-                      #     summary = function () {
+                          
+                      #     summary <- function () {
                       #       #######
                       #       1
                       #     }
@@ -102,6 +112,10 @@ linreg <- setRefClass ( "linreg",
 object <- linreg$new(form = Petal.Length~Sepal.Width+Sepal.Length, data = iris)
 object <- initialize(object,object$form, object$data)
 print.list(object$data, show_b = TRUE)
+plot(object)
+resid(object)
+pred(object)
+coef(object)
 
 
 ###################
