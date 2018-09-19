@@ -1,6 +1,8 @@
 #create class
 linreg <- setRefClass ( "linreg",
-                         fields = list ( lst = "list",
+                         fields = list ( #lst = "list",
+                                         form = "formula",
+                                         data = "data.frame",
                                          Regressions_coefficients = "numeric",
                                          The_fitted_value = "matrix",
                                          The_residuals = "matrix",
@@ -48,12 +50,31 @@ linreg <- setRefClass ( "linreg",
                              object$The_variance_of_the_reg_coef <- var
                              object$t_values <- t
                              object
-                            } 
-                      #    ,
-                      #     print = function () {
-                      #       #######
-                      #       1
-                      #     } ,
+                           },                          
+                          #################################### 
+                          print.list <- function (x, ...) {
+                             x<- as.list(x)
+                             list_names <- names(x)
+                             if (is.null(list_names)) 
+                             {
+                               list_names <- rep("", length(x))
+                             }
+                             print_element <- function(i)
+                             {
+                               if (list_names[i]=="")
+                               {
+                               cat("[[",i,"]]\n", sep="")
+                               }
+                               else
+                               {
+                                 cat("$", list_names[i], "\n", sep="")
+                                # print(x[[i]], ...)
+                               }
+                                 print(x[[i]], ...)
+                               cat("\n")
+                             }
+                             invisible(lapply(i<-1:length(x), print_element))
+                           } 
                       #     plot = function () {
                       #       #######
                       #       1
@@ -78,8 +99,10 @@ linreg <- setRefClass ( "linreg",
 )
 
 
-object <- linreg$new(lst = list(form = Petal.Length~Sepal.Width+Sepal.Length, data = iris))
-object <- initialize(object,form = Petal.Length~Sepal.Width+Sepal.Length, data = iris)
+object <- linreg$new(form = Petal.Length~Sepal.Width+Sepal.Length, data = iris)
+object <- initialize(object,object$form, object$data)
+print.list(object$data, show_b = TRUE)
+
 
 ###################
 
