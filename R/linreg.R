@@ -99,12 +99,26 @@ linreg <- setRefClass ( "linreg",
                             for(i in 1: length(coef))  
                              names(coef)[[i]] <- paste("coefficient", as.character(i))
                             coef
-                           } 
+                           } ,
                           
-                      #     summary <- function () {
-                      #       #######
-                      #       1
-                      #     }
+                           summary <- function (object, ...) {
+                             #######
+                             
+                             list_elements <- list(object$Regressions_coefficients,
+                                                object$The_variance_of_the_reg_coef,
+                                                object$t_values,
+                                                object$The_residual_variance,
+                                                object$The_degrees_of_freedom
+                                                )
+                             list_names <-c("coefficients","standard error","t-value","sigma", "degrees of freedom")
+                             print_element <- function(i)
+                             {
+                               cat("$", list_names[i], "\n", sep="" )
+                               print(list_elements[[i]])
+                               cat("\n")
+                             }
+                             invisible((lapply(i<-1:5, print_element)))
+                           }
                          )
 )
 
@@ -116,6 +130,7 @@ plot(object)
 resid(object)
 pred(object)
 coef(object)
+summary(object)
 
 
 ###################
