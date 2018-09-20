@@ -9,3 +9,4 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 RoxygenNote: 6.1.0
 Encoding: UTF-8
+Suggests: testthat

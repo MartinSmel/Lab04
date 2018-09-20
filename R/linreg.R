@@ -1,8 +1,8 @@
 #create class
 linreg <- setRefClass ( "linreg",
-                         fields = list ( #lst = "list",
-                                         form = "formula",
-                                         data = "data.frame",
+                         fields = list  ( #lst = "list",
+                                         #form = "formula",
+                                         #data = "data.frame",
                                          Regressions_coefficients = "numeric",
                                          The_fitted_value = "matrix",
                                          The_residuals = "matrix",
@@ -12,7 +12,7 @@ linreg <- setRefClass ( "linreg",
                                          t_values = "matrix"
                                        ) ,
                          methods = list (
-                           initialize <- function(object,form, data)
+                           initialize = function(form, data)
                            {
                              #  stopifnot(is.formula(formula) == TRUE)
                              X <- model.matrix(form, data)
@@ -38,26 +38,29 @@ linreg <- setRefClass ( "linreg",
                              #res. variance
                              sigma <- as.vector((t(e)%*%e)/df)
                              #variance of the reg. coef.
-                             var <- (sigma)^2 * solve(R_1) %*% solve(t(R_1))
+                             var <- (sigma)^2 * solve(R_1%*%t(R_1)) 
+                             #%*% solve(t(R_1))
                              #t-values
                              t <- beta/sqrt(var)
                           #   my_object <- linreg(
-                             object$Regressions_coefficients <- beta
-                             object$The_fitted_value <- fit_val
-                             object$The_residuals <- e
-                             object$The_degrees_of_freedom <- df
-                             object$The_residual_variance <- sigma
-                             object$The_variance_of_the_reg_coef <- var
-                             object$t_values <- t
-                             object
-                           },                          
+                             .self$Regressions_coefficients <- beta
+                             .self$The_fitted_value <- fit_val
+                             .self$The_residuals <- e
+                             .self$The_degrees_of_freedom <- df
+                             .self$The_residual_variance <- sigma
+                             .self$The_variance_of_the_reg_coef <- var
+                             .self$t_values <- t
+                             .self
+                           },                       
                           #################################### 
-                          print.list <- function (x, ...) {
-                             x<- as.list(x)
-                             list_names <- names(x)
+                          print = function (...) {
+                            x <-list()
+                             for(i in 1:length(Regressions_coefficients))
+                             x[[i]]<- Regressions_coefficients[[i]]
+                           list_names <- names(x)
                              if (is.null(list_names)) 
                              {
-                               list_names <- rep("", length(x))
+                              list_names <- rep("", length(x))
                              }
                              print_element <- function(i)
                              {
@@ -70,68 +73,67 @@ linreg <- setRefClass ( "linreg",
                                  cat("$", list_names[i], "\n", sep="")
                                 # print(x[[i]], ...)
                                }
-                                 print(x[[i]], ...)
+                                 print(x[[i]])
                                cat("\n")
                              }
                              invisible(lapply(i<-1:length(x), print_element))
-                           }, 
-                           plot <- function (object) {
+                           },
+                           plot = function () {
                              #Still wrong!
                              library(ggplot2)
                              p<-ggplot()+
                                layer(
-                                 mapping=aes(x=object$The_fitted_value, y=object$The_residuals),
+                                 mapping=aes(x=The_fitted_value, y=The_residuals),
                                  geom="point", stat="identity", position="identity")
                                  p
                                
-                           }, 
-                           resid <- function (object) {
+                           },
+                           resid = function () {
                              #######
-                             object$The_residuals
+                            The_residuals
                            }, 
-                           pred <- function (object) {
+                           pred = function () {
                              #######
-                             object$The_fitted_value
+                             The_fitted_value
                            } ,
-                           coef <- function (object) {
+                           coef = function () {
                              #######
-                             coef <- as.vector(object$Regressions_coefficients)
+                             coef <- as.vector(Regressions_coefficients)
                             for(i in 1: length(coef))  
                              names(coef)[[i]] <- paste("coefficient", as.character(i))
                             coef
                            } ,
                           
-                           summary <- function (object, ...) {
+                           summary = function () {
                              #######
                              
-                             list_elements <- list(object$Regressions_coefficients,
-                                                object$The_variance_of_the_reg_coef,
-                                                object$t_values,
-                                                object$The_residual_variance,
-                                                object$The_degrees_of_freedom
+                             list_elements <- list(Regressions_coefficients,
+                                                The_variance_of_the_reg_coef,
+                                                t_values,
+                                                The_residual_variance,
+                                                The_degrees_of_freedom
                                                 )
                              list_names <-c("coefficients","standard error","t-value","sigma", "degrees of freedom")
-                             print_element <- function(i)
+                             p_element <- function(i)
                              {
                                cat("$", list_names[i], "\n", sep="" )
-                               print(list_elements[[i]])
+                               print(list_elements[[i]], show_b = TRUE)
                                cat("\n")
                              }
-                             invisible((lapply(i<-1:5, print_element)))
+                             invisible(lapply(i<-1:5, p_element))
                            }
                          )
 )
 
 
-object <- linreg$new(form = Petal.Length~Sepal.Width+Sepal.Length, data = iris)
-object <- initialize(object,object$form, object$data)
-print.list(object$data, show_b = TRUE)
-plot(object)
-resid(object)
-pred(object)
-coef(object)
-summary(object)
-
+#object = linreg$new(form = Petal.Length~Sepal.Width+Sepal.Length, data = iris)
+#print.list(object$data, show_b = TRUE)
+#plot(object)
+#resid(object)
+#pred(object)
+#coef(object)
+#summary(object)
+#object$print.list
 
 ###################
 
