@@ -189,7 +189,7 @@ linreg <- setRefClass ( "linreg",
 )
 
 
-object = linreg$new(form = Petal.Length~Sepal.Width+Sepal.Length, data = iris)
+#object = linreg$new(form = Petal.Length~Sepal.Width+Sepal.Length, data = iris)
 #print.list(object$data, show_b = TRUE)
 #plot(object)
 #resid(object)
