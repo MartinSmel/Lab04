@@ -11,4 +11,4 @@ RoxygenNote: 6.1.0
 Encoding: UTF-8
 Suggests: testthat
 LazyData: TRUE
-Imports: ggplot2
+Imports: ggplot2, gridExtra

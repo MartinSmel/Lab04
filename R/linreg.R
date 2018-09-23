@@ -74,14 +74,33 @@ linreg <- setRefClass ( "linreg",
                            },
                       
                            plot = function () {
-                             #Still wrong!
                              library(ggplot2)
-                             p<-ggplot()+
-                               layer(
-                                 mapping=aes(x=The_fitted_value, y=The_residuals),
-                                 geom="point", stat="identity", position="identity")
-                                 p
-                               
+                             p1 <- ggplot()+
+                             geom_point(mapping=aes(x=The_fitted_value, y=The_residuals)) +
+                             geom_smooth(aes( x = The_fitted_value, y = The_residuals),
+                                                      formula = y~x,
+                                                      se = FALSE,
+                                                      span = 1,
+                                                      color = "red",
+                                                      method = "auto") +
+                             xlab(paste("Fitted Values\n", "lm(", format(form), ")", ""))+
+                             ylab("Residuals")+
+                             ggtitle("Residuals vs Fitted") 
+                             
+                             standardized_Residuals <- sqrt(abs(The_residuals - mean(The_residuals)))
+                                  
+                             p2 <- ggplot()+
+                               geom_point(mapping=aes(x=The_fitted_value, y=standardized_Residuals)) +
+                               geom_smooth(aes( x = The_fitted_value, y = standardized_Residuals),
+                                           formula = y~x,
+                                           se = FALSE,
+                                           span = 1,
+                                           color = "red",
+                                           method = "auto") +
+                               xlab(paste("Fitted Values\n", "lm(", format(form), ")", ""))+
+                               ylab(expression(sqrt("|Standardized residuals|")))+
+                               ggtitle("Scale-Location") 
+                             gridExtra::grid.arrange( grobs = list(p1,p2))
                            },
                            resid = function () {
                              #######
@@ -124,8 +143,9 @@ linreg <- setRefClass ( "linreg",
 )
 
 
-
+object = linreg$new(form = Petal.Length~Sepal.Width+Sepal.Length, data = iris)
 ###################
+object$plot()
 
 
  
