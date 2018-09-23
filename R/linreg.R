@@ -30,9 +30,8 @@ linreg <- setRefClass ( "linreg",
                              Q_2 <- Q[,c((n+1):m)]
                              #Regression coef.
                              beta <- as.vector(solve(R_1)%*%t(Q_1)%*%y)
-                             names(beta) <- c("(Intercept)", "Sepal.Width", "Sepal.Length")
                              #fitted values
-                             fit_val <- X%*%beta
+                             fit_val <- Q%*%R%*%beta
                              #residuals
                              e <- Q_2%*%t(Q_2)%*%y
                              #degrees of freedom
@@ -45,6 +44,7 @@ linreg <- setRefClass ( "linreg",
                              t = list()
                              for(i in (1:3))
                              t[[i]] <- beta/sqrt(var[[i,i]])
+                             names(beta) <- colnames(var)
                              .self$data_name <- deparse(substitute(data))
                              .self$form <- form
                              .self$data <- data
