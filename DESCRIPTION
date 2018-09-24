@@ -12,3 +12,5 @@ Encoding: UTF-8
 Suggests: testthat
 LazyData: TRUE
 Imports: ggplot2, gridExtra
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
