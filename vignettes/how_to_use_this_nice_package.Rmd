@@ -4,7 +4,7 @@ author: "Raymond Sseguya, Martin Smelik, Vinay"
 date: "2018 September 24"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Put the title of your vignette here}
+  %\VignetteIndexEntry{Lab4 custom linear regression package in R}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
