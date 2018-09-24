@@ -9,8 +9,7 @@ Description: More about what it does (maybe more than one line)
 License: GPL-3
 RoxygenNote: 6.1.0
 Encoding: UTF-8
-Suggests: testthat
+Suggests: testthat, knitr, rmarkdown
 LazyData: TRUE
 Imports: ggplot2, gridExtra
-Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
