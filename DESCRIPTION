@@ -5,7 +5,7 @@ Version: 1.0
 Date: 2018-09-19
 Author: Martin Smelik, Raymond SSeguya, Vinay
 Maintainer: Martin Smelik <smelomato@gmail.com>
-Description: More about what it does (maybe more than one line)
+Description: A linear regression application based on QR decomposition
 License: GPL-3
 RoxygenNote: 6.1.0
 Encoding: UTF-8

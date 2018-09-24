@@ -1,4 +1,20 @@
 
+#' linreg
+#' 
+#' This class perform linear regression
+#' @field data_name character.
+#' @field form formula.
+#' @field data data.frame.
+#' @field Regressions_coefficients vector.
+#' @field The_fitted_value matrix.
+#' @field The_residuals matrix.
+#' @field The_degrees_of_freedom numeric.
+#' @field The_variance_of_the_reg_coef matrix.
+#' @field t_values list.
+#' 
+#' @export
+
+
 #create class
 linreg <- setRefClass ( "linreg",
                          fields = list  (data_name = "character",
@@ -142,10 +158,3 @@ linreg <- setRefClass ( "linreg",
                          )
 )
 
-
-object = linreg$new(form = Petal.Length~Sepal.Width+Sepal.Length, data = iris)
-###################
-object$plot()
-
-
- 
