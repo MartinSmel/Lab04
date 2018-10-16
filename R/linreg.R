@@ -12,7 +12,8 @@
 #' @field The_variance_of_the_reg_coef matrix.
 #' @field t_values list.
 #' @import methods
-#' @exportClass linreg
+#' @export linreg
+
 
 
 #create class
@@ -28,8 +29,12 @@ linreg <- setRefClass ( "linreg",
                                          The_variance_of_the_reg_coef = "matrix",
                                          t_values = "list"
                                        ) ,
-                         methods = list (
-                           initialize = function(form, data)
+                         methods = list ( 
+                           
+                           #' @param form formula
+                           #' @param data data.frame
+                           #' @exportMethod initialize
+                          initialize = function(form, data)
                            {
                              #  stopifnot(is.formula(formula) == TRUE)
                              stopifnot (class(form) == "formula")
@@ -88,8 +93,7 @@ linreg <- setRefClass ( "linreg",
                             }
                               write.table(table, quote=FALSE)
                            },
-                      
-                           plot = function () {
+                            plot = function () {
                              library(ggplot2)
                              p1 <- ggplot()+
                              geom_point(mapping=aes(x=The_fitted_value, y=The_residuals)) +
@@ -118,7 +122,7 @@ linreg <- setRefClass ( "linreg",
                                ggtitle("Scale-Location") 
                              gridExtra::grid.arrange( grobs = list(p1,p2))
                            },
-                           resid = function () {
+                          resid = function () {
                              #######
                             The_residuals
                            }, 
@@ -133,7 +137,6 @@ linreg <- setRefClass ( "linreg",
                              names(coef)[[i]] <- paste("coefficient", as.character(i))
                             coef
                            } ,
-                          
                            summary = function () {
                          
                              cat("\nCall:\n")

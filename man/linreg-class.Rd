@@ -5,6 +5,11 @@
 \alias{linreg-class}
 \alias{linreg}
 \title{linreg}
+\arguments{
+\item{form}{formula}
+
+\item{data}{data.frame}
+}
 \description{
 This class perform linear regression
 }
