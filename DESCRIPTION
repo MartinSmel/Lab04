@@ -11,7 +11,7 @@ RoxygenNote: 6.1.0
 Encoding: UTF-8
 Suggests: testthat, knitr, rmarkdown
 LazyData: TRUE
-Imports: ggplot2, gridExtra
+Imports: ggplot2, gridExtra, methods
 VignetteBuilder: knitr
 
 

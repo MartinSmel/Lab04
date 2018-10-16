@@ -11,8 +11,8 @@
 #' @field The_degrees_of_freedom numeric.
 #' @field The_variance_of_the_reg_coef matrix.
 #' @field t_values list.
-#' 
-#' @export
+#' @import methods
+#' @exportClass linreg
 
 
 #create class
